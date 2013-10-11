@@ -6,7 +6,6 @@ autohotkey scripts for automating frequently done tasks on windows. It creates g
 I hate using ALT+TAB frequently hence i started this journey of automating my windows tasks.  I will be updating it frquently.
 
 
-
                                          Assigned hotkeys 
 
 
@@ -22,8 +21,8 @@ CTRL+SHIFT+c::To open Google search from clipboard text
 
 
 
-CapsLock (CTRL+SHIFT+ALT) +
-(remapped)
+CapsLock(remapped) (CTRL+SHIFT+ALT) +
+
 							A - Open or Bring to Front Anki
 							
 							C -                        Chrome
@@ -56,4 +55,5 @@ CapsLock (CTRL+SHIFT+ALT) +
 							
 							Up/Dn arrows -             Scroll browser window up/down from any window
 							                           (currently chrome only)   
+
 
