@@ -1,7 +1,7 @@
-/*Assigned hotkeys 
+/*                         Assigned hotkeys 
 
 
-CapsLock - Remapped to CTRL+SHIFT+ALT .So instead of typing CTRL+SHIFT+ALT , just press CapsLock
+; CapsLock - Remapped to CTRL+SHIFT+ALT .So instead of typing CTRL+SHIFT+ALT , just press CapsLock
 
 CapsLock+PgUp/CapsLock+PgDn(CTRL+SHIFT+ALT+PgUp/CTRL+SHIFT+ALT+PgDn)- scroll powerpoint slide up 
 or down from any window
@@ -13,8 +13,8 @@ CTRL+SHIFT+c::To open Google search from clipboard text
 
 
 
-CapsLock (CTRL+SHIFT+ALT) +
-(remapped)
+CapsLock(remapped) (CTRL+SHIFT+ALT) +
+
 							A - Open or Bring to Front Anki
 							
 							C -                        Chrome
@@ -38,6 +38,8 @@ CapsLock (CTRL+SHIFT+ALT) +
 							Q -                        Close all Open Windows and prompt shutdown
 							
 							S -                        Sublime
+
+							T -                        Stickynote
 							
 							W -                        Microsoft Word
 							
@@ -150,20 +152,48 @@ Common function to open a particular program or activate it if it is already ope
 */
 runprogram(myclass,command)
 {
-	;MsgBox, %myclass%
+	
 	IfWinExist ahk_class %myclass%
 	{
-	 ;MsgBox, existing windowpresent
+	 
 	 WinActivate
 	}
 	else
 	{
-	 ;MsgBox, myclass none existing windowpresent
+	 
 	 Run %command%
+	 
 	}
-	;return
+	
 
 }
+
+/*
+Common function to send command to a different program  if a particular window is open.
+TODO not complete Yet. find how to know the current folder of sublime and cd to that directory
+*/
+sendToprogram(activewindow,targetwindow,sendcommand,runcommand,targetcommand)
+{
+	
+	IfWinActive ahk_class %activewindow%
+    {
+     
+     IfWinExist ahk_class %targetwindow%
+     {
+      WinActivate
+      ;Send %targetcommand%
+     } 
+     else
+      Send %sendcommand%
+    }
+  
+     else 
+     {
+		
+		runprogram("%targetwindow%","%runcommand%")
+     }
+}
+
 
 /*
 Global hotkeys for frequently used programs.
@@ -222,14 +252,23 @@ return
   ;if sublime is active window , directly open the current folder in command line
   IfWinActive ahk_class PX_WINDOW_CLASS
   {
-     Send ^!c
-  }
-  else 
-  {
-		;MsgBox, sublime not active
-		runprogram("ConsoleWindowClass","%windir%\system32\cmd.exe")
+     
+     IfWinExist ahk_class ConsoleWindowClass
+      WinActivate
+     else
+      Send ^!c
   }
 
+
+  else 
+  {
+		
+		runprogram("ConsoleWindowClass","C:\windows\system32\cmd.exe")
+  }
+
+/*
+ SendToProgram("PX_WINDOW_CLASS","ConsoleWindowClass","^!c","C:\windows\system32\cmd.exe") 
+*/
 return
 
 
@@ -264,15 +303,31 @@ return
   else 
   {
 		;MsgBox, sublime not active
-		runprogram("ConsoleWindowClass","%windir%\system32\cmd.exe")
+		runprogram("ConsoleWindowClass","C:\Windows\system32\cmd.exe")
   }
 
 return
 
 
+/*
+  open Sticky Notes
+*/
+;
+^+!T:: 
 
+runprogram("Sticky_Notes_Note_Window","C:\Windows\system32\StikyNot.exe")
+return
 
-^+!L:: Run "C:\Users\Janardhan\AppData\Roaming\Dashlane\Dashlane.exe"
+/*
+  open Dashlane
+*/
+
+^+!L:: 
+
+; title&class - Dashlane ahk_class QWidget
+
+runprogram("Dashlane","C:\Users\Janardhan\AppData\Roaming\Dashlane\Dashlane.exe")
+return
 ;^+!:: Run ""
 ;^+!:: Run ""
 ;^+!:: Run ""
